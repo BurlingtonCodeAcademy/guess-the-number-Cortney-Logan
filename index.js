@@ -13,6 +13,7 @@ function makeRandomGuess(min, max) {
 }
 
 async function start() {
+  //starter code
   console.log(
     "Let's play a game where you (human) make up a number and I (computer) try to guess it."
   );
@@ -37,6 +38,10 @@ async function start() {
   if (response === "y" || response === "yes") {
     console.log(`Aha! Your number was ${guess}! I win!`);
   }
+  //if the computer guessed wrong it asks if the number is higher or lower
+  else {
+    console.log(`Bummer.  Is the number higher (h) or lower (l)? `);
+  }
 
   process.exit();
 }
@@ -44,9 +49,6 @@ async function start() {
 start();
 
 //OUTLINE//
-// if the computer guessed the correct number ==> user responds 'y' and game gives victory message
-// else the computer guessed incorrectly ==> user responds 'n' and computer asks if higher or lower
-
 //users responds h or l and changes min or max respectively
 
 //computer guesses again, but within the new range
