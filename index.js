@@ -21,17 +21,21 @@ async function start() {
   //cheat detector function that will return if there is an issue with the response based on known range
   function cheatDetector(min, max, guess, modifyRange) {
     if (modifyRange === "h") {
-      if (max - guess === 1) {
+      if (guess + 1 > max) {
         console.log(
-          `You said it was lower than ${max}, so it can't also be higher than ${guess}!`
+          `You said the number was lower than ${
+            max + 1
+          }, so it can't also be higher than ${guess}!`
         );
         return true;
       }
     }
     if (modifyRange === "l") {
-      if (guess - min === 1) {
+      if (guess - 1 < min) {
         console.log(
-          `You said it was higher than ${min}, so it can't also be lower than ${guess}!`
+          `You said the number was higher than ${
+            min - 1
+          }, so it can't also be lower than ${guess}!`
         );
         return true;
       }
@@ -76,9 +80,9 @@ async function start() {
     let guess = makeSmartGuess(min, max);
 
     //stores the users response if the computer's guess is correct or not
-    console.log(
-      `in the body of the while loop the current range is ${min} to ${max}`
-    );
+    // console.log(
+    //   `BUG: in the body of the while loop the current range is ${min} to ${max}`
+    // );
     response = await ask(`Is the number ${guess}? (y/n): `);
 
     //the computer has made another guess - index number of guesses made by 1
@@ -100,17 +104,18 @@ async function start() {
       if (modifyRange === "h") {
         if (cheatDetector(min, max, guess, modifyRange)) {
           console.log("you are cheating!");
+        } else {
+          min = guess + 1;
         }
-        min = guess + 1;
         //console.log(`the range is now ${min} to ${max}`);
       }
       //if the number is lower, the guess-1 is the new max of the range
       else if (modifyRange === "l") {
         if (cheatDetector(min, max, guess, modifyRange)) {
           console.log("you are cheating!");
+        } else {
+          max = guess - 1;
         }
-        cheatDetector(min, max, guess, modifyRange);
-        max = guess - 1;
         //console.log(`the range is now ${min} to ${max}`);
       }
     }
