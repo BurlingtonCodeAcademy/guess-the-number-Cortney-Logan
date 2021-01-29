@@ -80,9 +80,6 @@ async function start() {
     let guess = makeSmartGuess(min, max);
 
     //stores the users response if the computer's guess is correct or not
-    // console.log(
-    //   `BUG: in the body of the while loop the current range is ${min} to ${max}`
-    // );
     response = await ask(`Is the number ${guess}? (y/n): `);
 
     //the computer has made another guess - index number of guesses made by 1
