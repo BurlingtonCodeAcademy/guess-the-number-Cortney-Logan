@@ -16,18 +16,25 @@ async function start() {
   let min = 1;
   let max = 100;
 
-  //starter code
+  //starts the game
   console.log(
-    "Let's play a game where you (human) make up a number and I (computer) try to guess it."
+    "Let's play a game where you (human) pick a number between 1 and a maximum and I (computer) try to guess it."
   );
+  //allow the user to set the high range
+  max = await ask("What would you like the maximum number to be? ");
+
+  //confirms the user is ready to play
   let readyToPlay = await ask(
-    "Have you picked a random number between 1 and 100? (y/n): "
+    `Have you decided on a random number between 1 and ${max}? (y/n): `
   );
-  if (readyToPlay === "y" || readyToPlay === "yes") {
-    console.log("Great, let's get started!");
-  } else {
-    console.log("Ok, I'll wait, please pick a number between 1 and 100.");
+
+  //waits until the player is ready to play by entering 'y' or 'yes'
+  while (readyToPlay !== "y" && readyToPlay !== "yes") {
+    readyToPlay = await ask(
+      "Ok, I'll wait, please pick a number between 1 and 100. Are you ready now? (y/n) "
+    );
   }
+  console.log("Great, let's get started!");
 
   //the computer makes a guess
   let guess = makeRandomGuess(min, max);
