@@ -58,10 +58,15 @@ async function start() {
   let min = 1;
   let max = 100;
 
+  //declares wantToPlay variable to allow users to play multiple times
+  let wantToPlay = "y";
+
   //starts the game
   console.log(
     "Let's play a game where you (human) pick a number between 1 and a maximum, and I (computer) try to guess it."
   );
+
+  //while loop here to play the game again....
   //allow the user to set the high range
   max = await ask("What would you like the maximum number to be? ");
 
