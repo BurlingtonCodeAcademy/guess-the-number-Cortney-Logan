@@ -18,14 +18,14 @@ async function start() {
     return min + Math.floor((max - min) / 2);
   }
 
-  //cheat detector function that will return if there is an issue with the response based on known range
+  //cheat detector function that will return true if there is an issue with the response based on known range
   function cheatDetector(min, max, guess, modifyRange) {
     if (modifyRange === "h") {
       if (guess + 1 > max) {
         console.log(
-          `You said the number was lower than ${
+          `Liar, liar pants on fire! You said the number was lower than ${
             max + 1
-          }, so it can't also be higher than ${guess}!`
+          }, so it can't also be higher than ${guess}...`
         );
         return true;
       }
@@ -33,7 +33,7 @@ async function start() {
     if (modifyRange === "l") {
       if (guess - 1 < min) {
         console.log(
-          `You said the number was higher than ${
+          `Cheater, cheater pumpkin eater! You said the number was higher than ${
             min - 1
           }, so it can't also be lower than ${guess}!`
         );
@@ -96,33 +96,38 @@ async function start() {
     }
     //if the computer guessed wrong it asks if the number is higher or lower
     else {
-      //stores the h/l response from the user as a variable
-      let modifyRange = await ask(
-        `Bummer.  Is the number higher (h) or lower (l)? `
-      );
-      // if the number is higher, the guess+1 is the new min of the range
-      if (modifyRange === "h") {
-        if (cheatDetector(min, max, guess, modifyRange)) {
-          console.log("you are cheating!");
-        } else {
-          min = guess + 1;
+      console.log("Bummer.");
+
+      //declare the variable modifyRange that will hold h/l
+      let modifyRange = "";
+
+      while (!modifyRange) {
+        //stores the h/l response from the user in modifyRange
+        modifyRange = await ask(
+          `Is the number higher (h) or lower (l) than ${guess}? `
+        );
+        // if the number is higher, the guess+1 is the new min of the range
+        if (modifyRange === "h") {
+          if (cheatDetector(min, max, guess, modifyRange)) {
+            console.log("Please tell me the truth this time...");
+            modifyRange = "";
+          } else {
+            min = guess + 1;
+          }
         }
-        //console.log(`the range is now ${min} to ${max}`);
-      }
-      //if the number is lower, the guess-1 is the new max of the range
-      else if (modifyRange === "l") {
-        if (cheatDetector(min, max, guess, modifyRange)) {
-          console.log("you are cheating!");
-        } else {
-          max = guess - 1;
+        //if the number is lower, the guess-1 is the new max of the range
+        else if (modifyRange === "l") {
+          if (cheatDetector(min, max, guess, modifyRange)) {
+            console.log("Please tell me the truth this time...");
+            modifyRange = "";
+          } else {
+            max = guess - 1;
+          }
         }
-        //console.log(`the range is now ${min} to ${max}`);
       }
     }
   }
-
   process.exit();
 }
 
-//adding a comment
 start();
