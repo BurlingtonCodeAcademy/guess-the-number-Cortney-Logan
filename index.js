@@ -18,15 +18,18 @@ async function start() {
     return min + Math.floor((max - min) / 2);
   }
 
-  //cheat detector function that will return true if there is an issue with the response based on known range
+  //cheat detector function that will return true if there is an issue with the response based on known range (true ==> lying, false ==> not lying)
   function cheatDetector(min, max, guess, modifyRange) {
+    //if the min=max=guess then the computer has narrowed down the number to the correct guess
     if (min === max && min === guess) {
       console.log(
         `Your name must be Simba, 'cause you're a-lying. The number MUST be ${guess}.`
       );
       return true;
+      //runs through scenarios when 'h' or 'l' are given incorrectly
     } else {
       if (modifyRange === "h") {
+        //if the user indicates the number is higher but the guess is already the max included value ==> returns true
         if (guess + 1 > max) {
           console.log(
             `Liar, liar pants on fire! You said the number was lower than ${
@@ -37,6 +40,7 @@ async function start() {
         }
       }
       if (modifyRange === "l") {
+        //if the user indicates the number is lower but the guess is already the min included value ==> returns true
         if (guess - 1 < min) {
           console.log(
             `Cheater, cheater pumpkin eater! You said the number was higher than ${
@@ -104,7 +108,7 @@ async function start() {
       if (cheatDetector(min, max, guess, "")) {
         console.log("Please be honest this time....");
         //since numOfGuess will iterate once more when the computer prompts the users again we need to walk it down by 1 to correctly indicate the number of guesses taken
-        numOfGuess -=1 
+        numOfGuess -= 1;
       } else {
         console.log("Bummer.");
 
