@@ -11,17 +11,33 @@ async function start() {
   //returns a random guess between the given min and max range
   function makeRandomGuess(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-  };
+  }
 
   //returns a guess that is half way between the min and max range
   function makeSmartGuess(min, max) {
     return min + Math.floor((max - min) / 2);
-  };
+  }
 
   //cheat detector function that will return if there is an issue with the response based on known range
-  function cheatDetector(min,max,modifyRange){
-
-  };
+  function cheatDetector(min, max, guess, modifyRange) {
+    if (modifyRange === "h") {
+      if (max - guess === 1) {
+        console.log(
+          `You said it was lower than ${max}, so it can't also be higher than ${guess}!`
+        );
+        return true;
+      }
+    }
+    if (modifyRange === "l") {
+      if (guess - min === 1) {
+        console.log(
+          `You said it was higher than ${min}, so it can't also be lower than ${guess}!`
+        );
+        return true;
+      }
+    }
+    return false;
+  }
 
   //keep track of min & max for range of guesses
   let min = 1;
@@ -60,7 +76,9 @@ async function start() {
     let guess = makeSmartGuess(min, max);
 
     //stores the users response if the computer's guess is correct or not
-    console.log(`in the body of the while loop the current range is ${min} to ${max}`);
+    console.log(
+      `in the body of the while loop the current range is ${min} to ${max}`
+    );
     response = await ask(`Is the number ${guess}? (y/n): `);
 
     //the computer has made another guess - index number of guesses made by 1
@@ -80,11 +98,18 @@ async function start() {
       );
       // if the number is higher, the guess+1 is the new min of the range
       if (modifyRange === "h") {
+        if (cheatDetector(min, max, guess, modifyRange)) {
+          console.log("you are cheating!");
+        }
         min = guess + 1;
         //console.log(`the range is now ${min} to ${max}`);
       }
       //if the number is lower, the guess-1 is the new max of the range
       else if (modifyRange === "l") {
+        if (cheatDetector(min, max, guess, modifyRange)) {
+          console.log("you are cheating!");
+        }
+        cheatDetector(min, max, guess, modifyRange);
         max = guess - 1;
         //console.log(`the range is now ${min} to ${max}`);
       }
