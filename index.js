@@ -36,30 +36,46 @@ async function start() {
   }
   console.log("Great, let's get started!");
 
-  //the computer makes a guess
-  let guess = makeRandomGuess(min, max);
-  let response = await ask(`Is the number ${guess}? (y/n): `);
+  // declares the variable that will store the users response if the computer's guess is correct or not
+  let response = "n";
+  //declares the numOfGuess variable to keep track of the number of guesses
+  let numOfGuess = 0;
 
-  // if the computer guessed the correct number ==> user responds 'y' and game gives victory message
-  if (response === "y" || response === "yes") {
-    console.log(`Aha! Your number was ${guess}! I win!`);
-  }
-  //if the computer guessed wrong it asks if the number is higher or lower
-  else {
-    //stores the h/l response from the user as a variable
-    let modifyRange = await ask(
-      `Bummer.  Is the number higher (h) or lower (l)? `
-    );
-    // if the number is higher, the guess is the new min of the range
-    if (modifyRange === "h") {
-      min = guess;
-      console.log(`the range is now ${min} to ${max}`);
+  //while the user has not responded 'y' to indicate that the computer has correctly guessed, the computer will continue making guesses
+  while ((response === "n") | (response === "no")) {
+    //sets the computer up to make a random guess within the current range
+    let guess = makeRandomGuess(min, max);
+
+    //stores the users response if the computer's guess is correct or not
+    response = await ask(`Is the number ${guess}? (y/n): `);
+
+    //the computer has made another guess - index number of guesses made by 1
+    numOfGuess += 1;
+
+    // if the computer guessed the correct number ==> user responds 'y' and game gives victory message
+    if (response === "y" || response === "yes") {
+      console.log(
+        `Aha! Your number was ${guess}! I win!\nIt only took me ${numOfGuess} tries to correctly guess your number.`
+      );
     }
-    //if the number is lower, the guess is the new max of the range
-    else if (modifyRange === "l") {
-      max = guess;
-      console.log(`the range is now ${min} to ${max}`);
+    //if the computer guessed wrong it asks if the number is higher or lower
+    else {
+      //stores the h/l response from the user as a variable
+      let modifyRange = await ask(
+        `Bummer.  Is the number higher (h) or lower (l)? `
+      );
+      // if the number is higher, the guess+1 is the new min of the range
+      if (modifyRange === "h") {
+        min = guess + 1;
+        //console.log(`the range is now ${min} to ${max}`);
+      }
+      //if the number is lower, the guess-1 is the new max of the range
+      else if (modifyRange === "l") {
+        max = guess - 1;
+        //console.log(`the range is now ${min} to ${max}`);
+      }
     }
+
   }
 
   process.exit();
