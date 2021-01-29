@@ -12,6 +12,12 @@ async function start() {
   function makeRandomGuess(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+
+  //returns a guess that is half way between the min and max range
+  function makeSmartGuess(min, max) {
+    return min + Math.floor((max - min) / 2);
+  }
+
   //keep track of min & max for range of guesses
   let min = 1;
   let max = 100;
@@ -44,7 +50,9 @@ async function start() {
   //while the user has not responded 'y' to indicate that the computer has correctly guessed, the computer will continue making guesses
   while ((response === "n") | (response === "no")) {
     //sets the computer up to make a random guess within the current range
-    let guess = makeRandomGuess(min, max);
+    //let guess = makeRandomGuess(min, max);
+    //sets the computer up to make a smart guess within the current range
+    let guess = makeSmartGuess(min, max);
 
     //stores the users response if the computer's guess is correct or not
     response = await ask(`Is the number ${guess}? (y/n): `);
@@ -75,13 +83,9 @@ async function start() {
         //console.log(`the range is now ${min} to ${max}`);
       }
     }
-
   }
 
   process.exit();
 }
 
 start();
-
-//OUTLINE//
-//computer guesses again, but within the new range
