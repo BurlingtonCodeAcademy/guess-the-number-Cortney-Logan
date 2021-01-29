@@ -11,12 +11,17 @@ async function start() {
   //returns a random guess between the given min and max range
   function makeRandomGuess(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+  };
 
   //returns a guess that is half way between the min and max range
   function makeSmartGuess(min, max) {
     return min + Math.floor((max - min) / 2);
-  }
+  };
+
+  //cheat detector function that will return if there is an issue with the response based on known range
+  function cheatDetector(min,max,modifyRange){
+
+  };
 
   //keep track of min & max for range of guesses
   let min = 1;
@@ -55,6 +60,7 @@ async function start() {
     let guess = makeSmartGuess(min, max);
 
     //stores the users response if the computer's guess is correct or not
+    console.log(`in the body of the while loop the current range is ${min} to ${max}`);
     response = await ask(`Is the number ${guess}? (y/n): `);
 
     //the computer has made another guess - index number of guesses made by 1
