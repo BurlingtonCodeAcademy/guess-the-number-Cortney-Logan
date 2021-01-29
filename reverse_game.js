@@ -14,7 +14,7 @@ async function start() {
   }
 
   console.log(
-    "Let's play a game where I (computer) make up a number and you (human) try to guess it."
+    "Let's play a game where I (computer) pick a number between 1 and 100, and you (human) try to guess it."
   );
 
   //the computer picks a random number between 1 and 100
