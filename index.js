@@ -262,6 +262,39 @@ async function userGuesses() {
   }
 }
 
-userGuesses();
+//lets the user choose which version of teh guess the number game they'd like to play
+async function playGame() {
+  console.log("Hello and Welcome to the Guess The Number Game!");
 
-computerGuesses();
+  //asks the user which version of the game they'd like to play
+  let gameChoice = await ask(
+    "\nWhich game would you like to play?\n\t[1] You (human) pick a number, and I (computer) try to guess it.\n\t[2] I (computer) pick a number, and you (human) try to guess it.\nPlease select which game you'd like to play by entering either 1 or 2: "
+  );
+
+  //declares an array to hold the valid users input choices
+  let choices = ["1", "2"];
+
+  //sanitizes gameChoice
+  gameChoice = gameChoice.trim();
+
+  //checks that the choice is actually a number
+  while (isNaN(gameChoice) || !choices.includes(gameChoice)) {
+    gameChoice = await ask(
+      "Let's try this again. Please enter either 1 or 2 to choose the game you'd like to play. "
+    );
+  }
+
+  //sanitizes gameChoice
+  gameChoice = gameChoice.trim();
+
+  //triggers correct game to run once valid game choice has been made
+  if (gameChoice === "1") {
+    console.log("\nYou picked game 1, have fun!\n");
+    computerGuesses();
+  } else {
+    console.log("\nYou picked game 2, good luck!\n");
+    userGuesses();
+  }
+}
+
+playGame();
