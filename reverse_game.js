@@ -31,10 +31,14 @@ async function start() {
 
     console.log("\nI have picked a random number between 1 and 100.");
 
+    //declares the numOfGuess variable to keep track of the number of guesses
+    let numOfGuess = 0;
+
     //allows the user to guess as long as guess is not equal to the chosen randomNumber
     while (randomNumber !== +guess) {
       //prompts the use for a guess
       guess = await ask("\nPlease make a guess: ");
+      numOfGuess += 1;
       //if the guess is less than the randomNumber indicates that the guess is too low
       if (randomNumber > +guess) {
         console.log("\nYou guessed too low.");
@@ -48,6 +52,15 @@ async function start() {
         console.log(
           `\nCongratulations! You correctly guessed that the number is ${randomNumber}.`
         );
+
+        //reports the number of guesses it took the user to correctly guess
+        if (numOfGuess >= 7) {
+          console.log(
+            `It took you ${numOfGuess} tries to correctly guess my number.  You better keep practicing....`
+          );
+        } else {
+          console.log(`It only took you ${numOfGuess} tries.  You're AMAZING!`);
+        }
 
         //prompts the user if they'd like to play again
         wantToPlay = await ask("\nWould you like to play again? (y/n): ");
