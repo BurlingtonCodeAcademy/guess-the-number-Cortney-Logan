@@ -110,8 +110,10 @@ async function start() {
           `\nAha! Your number was ${guess}! I win!\nIt only took me ${numOfGuess} tries to correctly guess your number.`
         );
 
+        //prompts the user if they'd like to play again
         wantToPlay = await ask("\nWould you like to play again? (y/n): ");
 
+        //if the user does not want to play again the game exits
         if (wantToPlay === "n" || wantToPlay === "no") {
           console.log("\nGoodbye, thanks for playing!");
           process.exit();

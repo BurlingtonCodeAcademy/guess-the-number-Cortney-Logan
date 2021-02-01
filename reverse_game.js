@@ -18,7 +18,10 @@ async function start() {
     "Let's play a game where I (computer) pick a number between 1 and 100, and you (human) try to guess it."
   );
 
+  //declares wantToPlay variable to allow users to play multiple times
   let wantToPlay = "y";
+
+  //while wantToPlay is yes the game will continue to run.  If the user selects no the game ends
   while (wantToPlay === "y" || wantToPlay === "yes") {
     //the computer picks a random number between 1 and 100
     let randomNumber = chooseRandomNumber(1, 100);
@@ -44,8 +47,11 @@ async function start() {
         console.log(
           `\nCongratulations! You correctly guessed that the number is ${randomNumber}.`
         );
+
+        //prompts the user if they'd like to play again
         wantToPlay = await ask("\nWould you like to play again? (y/n): ");
 
+        //if the user does not want to play again the game exits
         if (wantToPlay === "n" || wantToPlay === "no") {
           console.log("\nGoodbye, thanks for playing!");
           process.exit();
