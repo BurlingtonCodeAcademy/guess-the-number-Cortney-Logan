@@ -78,7 +78,7 @@ async function start() {
   //waits until the player is ready to play by entering 'y' or 'yes'
   while (readyToPlay !== "y" && readyToPlay !== "yes") {
     readyToPlay = await ask(
-      "Ok, I'll wait, please pick a number between 1 and 100. Are you ready now? (y/n) "
+      `Ok, I'll wait, please pick a number between 1 and ${max}. Are you ready now? (y/n): `
     );
   }
   console.log("Great, let's get started!");
