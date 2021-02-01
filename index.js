@@ -1,3 +1,4 @@
+////Boilerplate code set up correctly - used to accept input from user
 const readline = require("readline");
 const rl = readline.createInterface(process.stdin, process.stdout);
 
