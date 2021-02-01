@@ -23,7 +23,7 @@ async function start() {
     //if the min=max=guess then the computer has narrowed down the number to the correct guess
     if (min === max && min === guess) {
       console.log(
-        `Your name must be Simba, 'cause you're a-lying. The number MUST be ${guess}.`
+        `\nYour name must be Simba, 'cause you're a-lying. The number MUST be ${guess}.\n`
       );
       return true;
       //runs through scenarios when 'h' or 'l' are given incorrectly
@@ -32,9 +32,9 @@ async function start() {
         //if the user indicates the number is higher but the guess is already the max included value ==> returns true
         if (guess + 1 > max) {
           console.log(
-            `Liar, liar pants on fire! You said the number was lower than ${
+            `\nLiar, liar pants on fire! You said the number was lower than ${
               max + 1
-            }, so it can't also be higher than ${guess}...`
+            }, so it can't also be higher than ${guess}...\n`
           );
           return true;
         }
@@ -43,9 +43,9 @@ async function start() {
         //if the user indicates the number is lower but the guess is already the min included value ==> returns true
         if (guess - 1 < min) {
           console.log(
-            `Cheater, cheater pumpkin eater! You said the number was higher than ${
+            `\nCheater, cheater pumpkin eater! You said the number was higher than ${
               min - 1
-            }, so it can't also be lower than ${guess}!`
+            }, so it can't also be lower than ${guess}!\n`
           );
           return true;
         }
@@ -54,21 +54,22 @@ async function start() {
     }
   }
 
-  //keep track of min & max for range of guesses. Default values are 1 and 100
-  let min = 1;
-  let max = 100;
+  //intros the game
+  console.log(
+    "Let's play a game where you (human) pick a number between 1 and a maximum, and I (computer) try to guess it."
+  );
 
   //declares wantToPlay variable to allow users to play multiple times
   let wantToPlay = "y";
 
   //while wantToPlay is yes the game will continue to run.  If the user selects no the game ends
   while (wantToPlay === "y" || wantToPlay === "yes") {
-    //starts the game
-    console.log(
-      "Let's play a game where you (human) pick a number between 1 and a maximum, and I (computer) try to guess it."
-    );
+    //keep track of min & max for range of guesses. Default values are 1 and 100
+    let min = 1;
+    let max = 100;
 
-    //while loop here to play the game again....
+    //starts the game
+
     //allow the user to set the high range
     max = await ask("\nWhat would you like the maximum number to be? ");
 
@@ -83,7 +84,7 @@ async function start() {
         `\nOk, I'll wait, please pick a number between 1 and ${max}. Are you ready now? (y/n): `
       );
     }
-    console.log("Great, let's get started!");
+    console.log("\nGreat, let's get started!");
 
     // declares the variable that will store the users response if the computer's guess is correct or not
     let response = "n";
@@ -106,13 +107,13 @@ async function start() {
       // if the computer guessed the correct number ==> user responds 'y' and game gives victory message
       if (response === "y" || response === "yes") {
         console.log(
-          `Aha! Your number was ${guess}! I win!\nIt only took me ${numOfGuess} tries to correctly guess your number.`
+          `\nAha! Your number was ${guess}! I win!\nIt only took me ${numOfGuess} tries to correctly guess your number.`
         );
 
         wantToPlay = await ask("\nWould you like to play again? (y/n): ");
 
         if (wantToPlay === "n" || wantToPlay === "no") {
-          console.log("\nOk, goodbye!");
+          console.log("\nGoodbye, thanks for playing!");
           process.exit();
         }
       }
@@ -124,8 +125,7 @@ async function start() {
           //since numOfGuess will iterate once more when the computer prompts the users again we need to walk it down by 1 to correctly indicate the number of guesses taken
           numOfGuess -= 1;
         } else {
-          console.log("Bummer.");
-
+          console.log("\nBummer.");
           //declare the variable modifyRange that will hold h/l
           let modifyRange = "";
 
