@@ -38,6 +38,13 @@ async function start() {
     while (randomNumber !== +guess) {
       //prompts the use for a guess
       guess = await ask("\nPlease make a guess: ");
+
+      //makes sure guess submitted is a valid number
+      while (isNaN(guess)) {
+        guess = await ask(
+          "Let's try this again. Please enter a number as your guess. "
+        );
+      }
       numOfGuess += 1;
       //if the guess is less than the randomNumber indicates that the guess is too low
       if (randomNumber > +guess) {

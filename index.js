@@ -74,6 +74,13 @@ async function start() {
     //allow the user to set the high range
     max = await ask("\nWhat would you like the maximum number to be? ");
 
+    //makes sure number submitted is a valid number
+    while (isNaN(max)) {
+      max = await ask(
+        "Let's try this again. Please enter a number you'd like to use as the maximum. "
+      );
+    }
+
     //confirms the user is ready to play
     let readyToPlay = await ask(
       `\nHave you decided on a random number between 1 and ${max}? (y/n): `
