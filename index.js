@@ -78,12 +78,16 @@ async function start() {
     let readyToPlay = await ask(
       `\nHave you decided on a random number between 1 and ${max}? (y/n): `
     );
+    //sanitizes readyToPlay
+    readyToPlay = readyToPlay.trim().toLowerCase();
 
     //waits until the player is ready to play by entering 'y' or 'yes'
     while (readyToPlay !== "y" && readyToPlay !== "yes") {
       readyToPlay = await ask(
         `\nOk, I'll wait, please pick a number between 1 and ${max}. Are you ready now? (y/n): `
       );
+      //sanitizes readyToPlay
+      readyToPlay = readyToPlay.trim().toLowerCase();
     }
     console.log("\nGreat, let's get started!");
 
@@ -102,6 +106,9 @@ async function start() {
       //stores the users response if the computer's guess is correct or not
       response = await ask(`\nIs the number ${guess}? (y/n): `);
 
+      //sanitizes response
+      response = response.trim().toLowerCase();
+
       //the computer has made another guess - index number of guesses made by 1
       numOfGuess += 1;
 
@@ -113,6 +120,9 @@ async function start() {
 
         //prompts the user if they'd like to play again
         wantToPlay = await ask("\nWould you like to play again? (y/n): ");
+
+        //sanitizes wantToPlay
+        wantToPlay = wantToPlay.trim().toLowerCase();
 
         //if the user does not want to play again the game exits
         if (wantToPlay === "n" || wantToPlay === "no") {
@@ -137,6 +147,10 @@ async function start() {
             modifyRange = await ask(
               `Is the number higher (h) or lower (l) than ${guess}? `
             );
+
+            //sanitizes modifyRange
+            modifyRange = modifyRange.trim().toLowerCase();
+
             // if the number is higher, the guess+1 is the new min of the range
             if (modifyRange === "h" || modifyRange === "higher") {
               if (cheatDetector(min, max, guess, modifyRange)) {

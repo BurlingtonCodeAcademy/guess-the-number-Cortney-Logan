@@ -65,6 +65,9 @@ async function start() {
         //prompts the user if they'd like to play again
         wantToPlay = await ask("\nWould you like to play again? (y/n): ");
 
+        //sanitizes wantToPlay
+        wantToPlay = wantToPlay.trim().toLowerCase();
+
         //if the user does not want to play again the game exits
         if (wantToPlay === "n" || wantToPlay === "no") {
           console.log("\nGoodbye, thanks for playing!");
