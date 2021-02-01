@@ -29,7 +29,7 @@ async function start() {
       return true;
       //runs through scenarios when 'h' or 'l' are given incorrectly
     } else {
-      if (modifyRange === "h") {
+      if (modifyRange === "h" || modifyRange === "higher") {
         //if the user indicates the number is higher but the guess is already the max included value ==> returns true
         if (guess + 1 > max) {
           console.log(
@@ -40,7 +40,7 @@ async function start() {
           return true;
         }
       }
-      if (modifyRange === "l") {
+      if (modifyRange === "l" || modifyRange === "lower") {
         //if the user indicates the number is lower but the guess is already the min included value ==> returns true
         if (guess - 1 < min) {
           console.log(
@@ -138,7 +138,7 @@ async function start() {
               `Is the number higher (h) or lower (l) than ${guess}? `
             );
             // if the number is higher, the guess+1 is the new min of the range
-            if (modifyRange === "h") {
+            if (modifyRange === "h" || modifyRange === "higher") {
               if (cheatDetector(min, max, guess, modifyRange)) {
                 console.log("Please tell me the truth this time...");
                 modifyRange = "";
@@ -147,7 +147,7 @@ async function start() {
               }
             }
             //if the number is lower, the guess-1 is the new max of the range
-            else if (modifyRange === "l") {
+            else if (modifyRange === "l" || modifyRange === "lower") {
               if (cheatDetector(min, max, guess, modifyRange)) {
                 console.log("Please tell me the truth this time...");
                 modifyRange = "";
