@@ -8,7 +8,7 @@ function ask(questionText) {
   });
 }
 
-async function start() {
+async function userGuesses() {
   //returns a random guess between the given min and max range
   function chooseRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -85,4 +85,4 @@ async function start() {
   }
 }
 
-start();
+userGuesses();
