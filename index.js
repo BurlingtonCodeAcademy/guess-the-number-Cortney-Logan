@@ -10,11 +10,6 @@ function ask(questionText) {
 
 //Guess The Number game - the users picks a number and the computer guesses
 async function computerGuesses() {
-  //returns a random guess between the given min and max range
-  function makeRandomGuess(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
   //returns a guess that is half way between the min and max range
   function makeSmartGuess(min, max) {
     return min + Math.floor((max - min) / 2);
@@ -70,15 +65,13 @@ async function computerGuesses() {
     let min = 1;
     let max = 100;
 
-    //starts the game
-
     //allow the user to set the high range
     max = await ask("\nWhat would you like the maximum number to be? ");
 
     //makes sure number submitted is a valid number
     while (isNaN(max)) {
       max = await ask(
-        "Let's try this again. Please enter a number you'd like to use as the maximum. "
+        "\nLet's try this again. Please enter a number you'd like to use as the maximum. "
       );
     }
 
@@ -97,7 +90,40 @@ async function computerGuesses() {
       //sanitizes readyToPlay
       readyToPlay = readyToPlay.trim().toLowerCase();
     }
-    console.log("\nGreat, let's get started!");
+
+    //declares a variable to store the user's number to be used to detect cheating
+    let secretNumber = await ask(
+      "\nWhat is your secret number?\nI won't peak, I promise..."
+    );
+
+    //sanitizes input into a number if a string has been entered
+    secretNumber = +secretNumber;
+
+    //guard clause to check that the secret number entered is a number and within the range
+    while (isNaN(secretNumber) || secretNumber > max || secretNumber < 1) {
+      //if the input entered is not a number prompts user to re-enter secret number
+      if (isNaN(secretNumber)) {
+        secretNumber = await ask(
+          `\nYou must enter a number. Please enter your secret number - remember it should be between 1 and ${max}. `
+        );
+      }
+      //if the input is outside of the range 1 to max, prompts the user to re-enter the secret number
+      else {
+        secretNumber = await ask(
+          `\nRemember, the number must be between 1 and ${max}. Please choose a different secret number that is within the correct range. `
+        );
+      }
+      //sanitizes input into a number if a string has been entered
+      secretNumber = +secretNumber;
+    }
+
+    //returns the secret number the user input
+    console.log(
+      `\nYou entered ${secretNumber}. \n\nBeep. Boop. Beep. Erasing from my memory.`
+    );
+
+    //starts the game
+    console.log("\nNow I will try to guess your secret number!");
 
     // declares the variable that will store the users response if the computer's guess is correct or not
     let response = "n";
@@ -106,8 +132,6 @@ async function computerGuesses() {
 
     //while the user has not responded 'y' to indicate that the computer has correctly guessed, the computer will continue making guesses
     while ((response === "n") | (response === "no")) {
-      //sets the computer up to make a random guess within the current range
-      //let guess = makeRandomGuess(min, max);
       //sets the computer up to make a smart guess within the current range
       let guess = makeSmartGuess(min, max);
 
