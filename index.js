@@ -1,4 +1,4 @@
-////Boilerplate code set up correctly - used to accept input from user
+//Boilerplate code set up correctly - used to accept input from user
 const readline = require("readline");
 const rl = readline.createInterface(process.stdin, process.stdout);
 
@@ -16,14 +16,13 @@ async function computerGuesses() {
   }
 
   //cheat detector function that will return true if there is an issue with the response based on known range (true ==> lying, false ==> not lying)
-  function cheatDetector(min, max, guess, modifyRange) {
-    //if the min=max=guess then the computer has narrowed down the number to the correct guess
-    if (min === max && min === guess) {
+  function cheatDetector(min, max, guess, secretNumber, modifyRange) {
+    //if the computer's guess is the secret number but the user has said no, the computer calls them out for cheating
+    if (guess === secretNumber) {
       console.log(
-        `\nYour name must be Simba, 'cause you're a-lying. The number MUST be ${guess}.\n`
+        `\nHmmm, is your name Mufasa, 'cause I think you're a-lying...\n`
       );
       return true;
-      //runs through scenarios when 'h' or 'l' are given incorrectly
     } else {
       if (modifyRange === "h" || modifyRange === "higher") {
         //if the user indicates the number is higher but the guess is already the max included value ==> returns true
@@ -93,7 +92,7 @@ async function computerGuesses() {
 
     //declares a variable to store the user's number to be used to detect cheating
     let secretNumber = await ask(
-      "\nWhat is your secret number?\nI won't peak, I promise..."
+      "\nWhat is your secret number? I won't peak, I promise..."
     );
 
     //sanitizes input into a number if a string has been entered
@@ -162,10 +161,11 @@ async function computerGuesses() {
           process.exit();
         }
       }
-      //if the computer guessed wrong it asks if the number is higher or lower
+
+      //if the computer guessed wrong the user answers 'n' and computer asks if the number is higher or lower
       else {
         //if the min, max and guess are all equal then the computer has correctly narrowed down the number and the user is cheating
-        if (cheatDetector(min, max, guess, "")) {
+        if (cheatDetector(min, max, guess, secretNumber, "")) {
           console.log("Please be honest this time....");
           //since numOfGuess will iterate once more when the computer prompts the users again we need to walk it down by 1 to correctly indicate the number of guesses taken
           numOfGuess -= 1;
@@ -185,7 +185,7 @@ async function computerGuesses() {
 
             // if the number is higher, the guess+1 is the new min of the range
             if (modifyRange === "h" || modifyRange === "higher") {
-              if (cheatDetector(min, max, guess, modifyRange)) {
+              if (cheatDetector(min, max, guess, secretNumber, modifyRange)) {
                 console.log("Please tell me the truth this time...");
                 modifyRange = "";
               } else {
@@ -194,7 +194,7 @@ async function computerGuesses() {
             }
             //if the number is lower, the guess-1 is the new max of the range
             else if (modifyRange === "l" || modifyRange === "lower") {
-              if (cheatDetector(min, max, guess, modifyRange)) {
+              if (cheatDetector(min, max, guess, secretNumber, modifyRange)) {
                 console.log("Please tell me the truth this time...");
                 modifyRange = "";
               } else {
